@@ -28,18 +28,21 @@ class PlayArea:
                                  (topLeftX + j*self.gameAreaBlockSize, topLeftY),
                                  (topLeftX + j*self.gameAreaBlockSize, topLeftY + self.gameAreaHeight))
 
-    def validSpace(self, currPiece):
+    def validSpace(self, shape):
         """
-        Check if the piece is in a valid position (no collisions with locked positions or boundaries).
+        Checks if the current shape's positions are valid:
+        - Inside the grid (x between 0–9, y < 20)
+        - Not colliding with locked positions
+        Negative y (above the grid) is allowed.
         """
-        acceptedPos = [(j, i) for i in range(20) for j in range(10) if (i, j) not in self.lockedPosition]
+        acceptedPos = [[(j, i) for j in range(10) if self.grid[i][j] == (0, 0, 0)] for i in range(20)]
+        acceptedPos = [j for sub in acceptedPos for j in sub]
 
-        for pos in currPiece.convertShapeFormat():
+        for pos in shape.positions:
             x, y = pos
-            if x < 0 or x >= 10 or y >= 20:
-                return False
-            if (x, y) in self.lockedPosition:
-                return False
+            if (x, y) not in acceptedPos:
+                if y > -1:  # <-- only block if it's inside visible grid
+                    return False
         return True
 
     def checkLost(self):

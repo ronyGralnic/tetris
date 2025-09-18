@@ -76,4 +76,4 @@ class Shapes:
 
     def getShape(self):
         shape = random.choice(self.shapes)
-        return Piece(3, 0, shape)
+        return Piece(3, -3, shape)

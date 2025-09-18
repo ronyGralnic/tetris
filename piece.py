@@ -1,21 +1,24 @@
 from shapes import  Shapes
+import random
+
+colors = [
+    (0, 255, 0),     # green
+    (255, 0, 0),     # red
+    (0, 0, 255),     # blue
+    (255, 255, 0),   # yellow
+    (255, 165, 0),   # orange
+    (128, 0, 128),   # purple
+    (0, 255, 255)    # cyan
+]
+
 class Piece:
-
     def __init__(self, x, y, shape):
-
-
         self.xCor = x
-
         self.yCor = y
         self.shape = shape
-
-
-        self.color = shape.shapesColorsLobby[shape]
-
-        #for each up arrow ey press, 1 will be added
+        self.color = random.choice(colors)  # <-- random each time
         self.rotation = 0
 
-        self.positions = []
 
 
     def convertShapeFormat(self):
@@ -32,4 +35,4 @@ class Piece:
 
         for i,pos in enumerate(self.positions):
             self.positions[i] = (pos[0]-2, pos[1]-4)
-            
+

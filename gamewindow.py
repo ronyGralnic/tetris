@@ -15,8 +15,24 @@ class GameWindow:
         self.topLeftY = 50
 
     def drawWindow(self, score=0, lastScore=0, currPiece=None):
+        # Fill screen black
         self.screen.fill((0, 0, 0))
-        # ... draw title, score, etc.
+
+        # Game title
+        titleFont = pygame.font.SysFont("comicsans", 60, bold=True)
+        label = titleFont.render("Tetris", 1, (255, 255, 255))
+        self.screen.blit(label, (self.topLeftX + self.gameArea.gameAreaWidth  - (label.get_width() / 30), 10))
+
+        # Current Score
+        font = pygame.font.SysFont("comicsans", 30)
+        scoreLabel = font.render("Score: " + str(score), 1, (255, 255, 255))
+        sx = self.topLeftX + self.gameArea.gameAreaWidth + 50
+        sy = self.topLeftY + 200
+        self.screen.blit(scoreLabel, (sx + 20, sy + 160))
+
+        # High Score
+        highScoreLabel = font.render("High Score: " + str(lastScore), 1, (255, 255, 255))
+        self.screen.blit(highScoreLabel, (sx + 20, sy + 200))
 
         # Draw the locked grid
         for i in range(len(self.gameArea.grid)):
@@ -42,11 +58,12 @@ class GameWindow:
         pygame.draw.rect(self.screen, (255, 0, 0),
                          (self.topLeftX, self.topLeftY, self.gameArea.gameAreaWidth, self.gameArea.gameAreaHeight), 4)
 
+        # Draw grid lines
         self.gameArea.drawGrid(self.screen, self.topLeftX, self.topLeftY)
 
     def drawNextShape(self, currPiece):
         font = pygame.font.SysFont("comicsans", 30)
-        label = font.render('Next Shape', 1, (255,255,255))
+        label = font.render('Next Shape', 1, (255, 255, 255))
         startX = self.topLeftX + self.gameArea.gameAreaWidth + 50
         startY = self.topLeftY + 100
 
@@ -62,10 +79,10 @@ class GameWindow:
                                       self.gameArea.gameAreaBlockSize,
                                       self.gameArea.gameAreaBlockSize), 0)
 
-        self.screen.blit(label, (startX+10, startY-30))
+        self.screen.blit(label, (startX + 10, startY - 30))
 
     def drawTextMiddle(self, text, size, color):
         font = pygame.font.SysFont("comicsans", size, bold=True)
         label = font.render(text, 1, color)
-        self.screen.blit(label, (self.topLeftX + self.gameArea.gameAreaWidth/2 - label.get_width()/2,
-                                 self.topLeftY + self.gameArea.gameAreaHeight/2 - label.get_height()/2))
+        self.screen.blit(label, (self.topLeftX + self.gameArea.gameAreaWidth / 2 - label.get_width() / 2,
+                                 self.topLeftY + self.gameArea.gameAreaHeight / 2 - label.get_height() / 2))
